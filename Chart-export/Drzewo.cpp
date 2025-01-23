@@ -2,6 +2,23 @@
 #include "CSVReader.h"
 #include <iomanip>
 
+/**
+ * @brief Wczytuje punkty pomiarowe do struktury drzewa.
+ *
+ * Funkcja przetwarza wektor wskaŸników do obiektów typu PunktPomiaru,
+ * analizuj¹c datê i godzinê ka¿dego punktu. Na podstawie godziny
+ * przypisuje punkty do odpowiednich æwiartek dnia oraz struktury
+ * reprezentuj¹ce lata, miesi¹ce i dni.
+ *
+ * @param punkty Wektor wskaŸników do obiektów typu PunktPomiaru,
+ *               które maj¹ zostaæ wczytane do drzewa.
+ *
+ * @note Oczekuje, ¿e format daty w polu `dataGodzina` obiektów
+ *       PunktPomiaru jest zgodny z YYYY-MM-DD HH formatem.
+ *
+ * @warning Nale¿y upewniæ siê, ¿e struktury dla roku, miesi¹ca i dnia
+ *          s¹ poprawnie zainicjowane przed wywo³aniem tej funkcji.
+ */
 void Drzewo::wczytajDoDrzewa(std::vector<PunktPomiaru*> punkty) {
     for (PunktPomiaru* punkt : punkty) {
         std::string data = punkt->dataGodzina;
@@ -9,15 +26,18 @@ void Drzewo::wczytajDoDrzewa(std::vector<PunktPomiaru*> punkty) {
         int miesiac = std::stoi(data.substr(5, 2));
         int dzien = std::stoi(data.substr(8, 2));
         int godzina = std::stoi(data.substr(11, 2));
-        
+
         int cwiartka;
         if (godzina < 6) {
             cwiartka = 0;
-        } else if (godzina < 12) {
+        }
+        else if (godzina < 12) {
             cwiartka = 1;
-        } else if (godzina < 18) {
+        }
+        else if (godzina < 18) {
             cwiartka = 2;
-        } else {
+        }
+        else {
             cwiartka = 3;
         }
 
